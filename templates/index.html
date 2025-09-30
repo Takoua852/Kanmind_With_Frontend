@@ -1,0 +1,35 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Redirecting...</title>
+
+    <link rel="icon" href="{% static 'assets/icons/favicon.svg' %}" type="image/svg+xml" />
+
+    <link rel="stylesheet" href="{% static 'shared/css/variables.css' %}" />
+    <link rel="stylesheet" href="{% static 'shared/css/standard.css' %}" />
+    <link rel="stylesheet" href="{% static 'shared/css/fonts.css' %}" />
+    <link rel="stylesheet" href="{% static 'shared/css/assets.css' %}" />
+
+    <script>
+      function init() {
+        const isAuthenticated = localStorage.getItem('auth-user-id') !== null
+      
+        if (isAuthenticated) {
+          window.location.href = "{% url 'dashboard' %}"
+        } else {
+          window.location.href = "{% url 'auth' %}"
+        }
+      }
+    </script>
+  </head>
+  <body class="d_flex_cc_gl">
+    <div class="loading-container w_full d_flex_cc_gl f_d_c">
+      <div class="spinner"></div>
+      <p class="font_white_color">Redirecting...</p>
+    </div>
+  </body>
+</html>

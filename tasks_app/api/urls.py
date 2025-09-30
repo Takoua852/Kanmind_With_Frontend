@@ -1,5 +1,4 @@
 from django.urls import path
-# from .views import ReviewingTasksView, AssignedTasksView, TaskCreateView
 from .views import TaskCreateView, TaskDetailView, ReviewingTasksView, AssignedTasksView, CommentListCreateView, CommentDetailView
 
 urlpatterns = [

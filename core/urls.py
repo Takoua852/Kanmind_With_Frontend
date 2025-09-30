@@ -26,5 +26,9 @@ urlpatterns = [
     path('api/', include('users_auth_app.api.urls')),
     path('api-auth/', include('rest_framework.urls')),
     path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
-    path('api/docs/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui')
+    path('api/docs/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
+
+    #frontend
+      path("", include("kanban_app.urls")), 
+      path("", include("users_auth_app.urls"))
 ]

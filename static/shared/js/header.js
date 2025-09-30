@@ -1,0 +1,91 @@
+function logOut() {
+    removeAuthCredentials()
+    window.location.href = "/login/"; 
+}
+
+async function setHeader() {
+    setHeaderTemplate()
+}
+
+function setHeaderTemplate() {
+    let headerRef = document.getElementById('head_content_right')
+    headerRef.innerHTML = getHeaderTemplate()
+}
+
+function getHeaderTemplate() {
+    const currentUrl = window.location.href;
+
+    if (currentUrl.endsWith('/login/')) {
+        return `
+       <div class="d_flex_cc_gm">
+            <a href="/register/" class="std_btn btn_prime pad_s d_flex_cc_gs">
+                <img src="../../static/assets/icons/sign_up_icon.svg" alt="" srcset=""> 
+                Sign up
+            </a>
+        </div>`
+    } else if (currentUrl.endsWith('/register/')) {
+        return `
+       <div class="d_flex_cc_gm">
+            <a href="/login/" class="std_btn btn_prime pad_s d_flex_cc_gs">
+                <img src="../../static/assets/icons/login_icon.svg" alt="" srcset=""> 
+                Log in
+            </a>
+        </div>`
+    } else {
+        return getLogedInHeaderTemplate()
+    }
+}
+
+function closeOtherMenuBtns(element) {
+    let menuBtns = document.querySelectorAll('.menu_toggle')
+    menuBtns.forEach(btn => {
+        if (btn !== element) {
+            btn.setAttribute('open', 'false')
+        }
+    })
+}
+
+function getLogedInHeaderTemplate() {
+    const currentUrl = window.location.href;
+    let currentUserId = getAuthUserId();
+    if (!currentUserId) {
+        if (currentUrl.endsWith('/imprint/') || currentUrl.endsWith('/privacy/')) {
+            return `
+              <div class="d_flex_cc_gm">
+                <a href="/login/" class="std_btn btn_prime pad_s d_flex_cc_gs">
+                    <img src="../../static/assets/icons/login_icon.svg" alt="" srcset=""> 
+                    Log in
+                </a>
+            </div>`
+        } else {
+            window.location.href = "/login/"
+        }
+
+    }
+    let currentUser = getAuthUser();
+    return `
+        <div class="menu_btn_wrapper">
+            <button onclick="closeOtherMenuBtns(this); toggleOpen(this); stopProp(event)" closable="true" open="false" class="menu_toggle std_btn menu_btn pad_s d_flex_cc_gs">
+                <img src="/static/assets/icons/menu.svg" alt="" srcset="">
+            </button>
+            <div class="menu_content d_flex_cc_gm f_d_c">
+                <p class="d_flex_sc_gm font_white_color" onclick="window.location.href = '/dashboard/'">
+                    <img src="/static/assets/icons/dashboard.svg" alt="" srcset=""> 
+                    Dashboard
+                </p>
+                <p class="d_flex_sc_gm font_white_color" onclick="window.location.href = '/boards/'">
+                    <img src="/static/assets/icons/view_board_yellow.svg" alt="" srcset=""> 
+                    Boards
+                </p>
+            </div>
+        </div>
+        <div class="menu_btn_wrapper"> 
+            <button onclick="closeOtherMenuBtns(this); toggleOpen(this); stopProp(event)" closable="true" open="false" class="menu_toggle profile_circle color_${currentUser.initials[0]}">${currentUser.initials}</button>   
+            <div class="menu_content d_flex_cc_gm f_d_c">
+                <p class="d_flex_cc_gm font_white_color" onclick="logOut()">
+                    <img src="/static/assets/icons/logout.svg" alt="" srcset=""> 
+                    Log out 
+                </p>
+            </div>
+        </div>`
+}
