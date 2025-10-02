@@ -1,56 +1,67 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>KanMind - Dashboard</title>
 
-    <link rel="stylesheet" href="{% static 'shared/css/variables.css' %}">
-    <link rel="stylesheet" href="{% static 'shared/css/standard.css' %}">
-    <link rel="stylesheet" href="{% static 'shared/css/fonts.css' %}">
-    <link rel="stylesheet" href="{% static 'shared/css/assets.css' %}">
-    <link rel="stylesheet" href="{% static 'shared/css/header_footer.css' %}">
+    <link rel="stylesheet" href="{% static 'shared/css/variables.css' %}" />
+    <link rel="stylesheet" href="{% static 'shared/css/standard.css' %}" />
+    <link rel="stylesheet" href="{% static 'shared/css/fonts.css' %}" />
+    <link rel="stylesheet" href="{% static 'shared/css/assets.css' %}" />
+    <link rel="stylesheet" href="{% static 'shared/css/header_footer.css' %}" />
 
     <script src="{% static 'shared/js/ui_helper.js' %}"></script>
     <script src="{% static 'shared/js/api.js' %}"></script>
     <script src="{% static 'shared/js/header.js' %}"></script>
 
     <script>
-        function checkNav(){
-            if(getAuthUserId() == null) document.querySelector("nav").remove();
-        };
+      function checkNav() {
+        if (getAuthUserId() == null) document.querySelector('nav').remove()
+      }
     </script>
-</head>
+  </head>
 
-<body onload="setHeader();checkNav()">
+  <body onload="setHeader();checkNav()">
     <header onclick="redirectToDashboard()" class="main_header w_full">
-        <img src="{% static 'assets/icons/logo_icon.svg' %}" alt="" srcset="">
-        <div id="head_content_right" class="d_flex_cc_gm head_content_right"></div>
+      <img src="{% static 'assets/icons/logo_icon.svg' %}" alt="" srcset="" />
+      <div id="head_content_right" class="d_flex_cc_gm head_content_right"></div>
     </header>
     <main class="w_full d_flex_ss_gl font_white_color">
+      <nav class="font_sec_color w_full">
+        <a class="link_secondary" href="/dashboard/">Dashboard</a>
+        /
+        <a class="link_secondary" href="./index.html">Privacy Policy</a>
+      </nav>
 
-        <nav class="font_sec_color w_full">
-            <a class="link_secondary" href="/dashboard/">Dashboard</a>
-            /
-            <a class="link_secondary" href="./index.html">Privacy Policy</a>
-        </nav>
+      <h1 class="font_prime_color">Privacy Policy</h1>
 
-        <h1 class="font_prime_color">Privacy Policy</h1>
+      {% comment %} <section class="d_flex_ss_gm f_d_c">
+        <h2>Subtitle</h2>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste ea placeat illo omnis, atque temporibus nostrum quia! Impedit, aliquid. Placeat impedit neque quod quasi eos fuga ipsa fugit odit voluptatem?</p>
+      </section> {% endcomment %}
+      <!-- Privacy Content -->
+      <section class="d_flex_ss_gm f_d_c privacy_content">
+        <h2>Data Collection & Usage</h2>
+        <p>At KanMind, your privacy is important to us. We only collect necessary data to provide our services and never share your information with third parties without your consent.</p>
 
-        <section class="d_flex_ss_gm f_d_c">
-            <h2>Subtitle</h2>
-            <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste ea placeat illo omnis, atque temporibus nostrum quia! Impedit, aliquid. Placeat impedit neque quod quasi eos fuga ipsa fugit odit voluptatem?
-            </p>
-        </section>
+        <h2>Cookies</h2>
+        <p>Our platform uses cookies to improve user experience, remember login sessions, and provide analytics. You can manage cookie preferences in your browser settings.</p>
+
+        <h2>Third-Party Services</h2>
+        <p>We use external services like Firebase for authentication and data storage. These services follow their own privacy policies. We recommend reviewing their policies to understand how your data is managed.</p>
+
+        <h2>Contact</h2>
+        <p>
+          If you have questions about our Privacy Policy, please contact us via our <a href="{% url 'imprint' %}"> Imprint</a> page.
+        </p>
+      </section>
     </main>
-    <footer class="main_footer  w_full">
-        <nav class="d_flex_cs_gl">
-            <a href="{% url 'imprint' %}" class="link">Imprint</a>
-        </nav>
+    <footer class="main_footer w_full">
+      <nav class="d_flex_cs_gl">
+        <a href="{% url 'imprint' %}" class="link">Imprint</a>
+      </nav>
     </footer>
-</body>
-
+  </body>
 </html>

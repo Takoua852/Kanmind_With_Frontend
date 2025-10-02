@@ -28,5 +28,3 @@ def board_detail(request):
     board_id = request.GET.get("id")  
     return render(request, BoardDetailView.template_name, {"board_id": board_id})
 
-# def tasks_list_create(request):
-#     return render(request, BoardDetailView.template_name)

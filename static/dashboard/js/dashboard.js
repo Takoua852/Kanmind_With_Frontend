@@ -21,7 +21,6 @@ async function getBoards() {
 
     if (boardsResp.ok) {
         currentBoards = boardsResp.data;
-        console.log("Current boards:", currentBoards);
     } else {
         console.warn("BOARDS_URL loadingerror")
     }
@@ -136,8 +135,20 @@ function getSingleTaskTemplate(task) {
 }
 
 function redirectToBoardWTask(taskId){
-    let task = currentAssignedTickets.find(task => task.id == taskId)
-    window.location.href = `/board/?id=${task.board}&task_id=${task.id}`
+
+    let taskSource = currenTaskFilter === "review" 
+        ? currentReviewerTickets 
+        : currentAssignedTickets;
+    let task = taskSource.find(task => Number(task.id) === Number(taskId));
+
+    if (!task) {
+        return;
+    }
+    if (!task.board) {
+        return;
+    }
+
+    window.location.href = `/board/?id=${task.board}&task_id=${task.id}`;
 }
 
 function renderMemberAndTaskCount(){

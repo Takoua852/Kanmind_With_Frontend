@@ -18,12 +18,12 @@ function getHeaderTemplate() {
     if (currentUrl.endsWith('/login/')) {
         return `
        <div class="d_flex_cc_gm">
-            <a href="/register/" class="std_btn btn_prime pad_s d_flex_cc_gs">
+            <a href="/registration/" class="std_btn btn_prime pad_s d_flex_cc_gs">
                 <img src="../../static/assets/icons/sign_up_icon.svg" alt="" srcset=""> 
                 Sign up
             </a>
         </div>`
-    } else if (currentUrl.endsWith('/register/')) {
+    } else if (currentUrl.endsWith('/registration/')) {
         return `
        <div class="d_flex_cc_gm">
             <a href="/login/" class="std_btn btn_prime pad_s d_flex_cc_gs">

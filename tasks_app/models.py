@@ -2,7 +2,7 @@ from django.db import models
 from django.conf import settings
 from kanban_app.models import Board
 from datetime import datetime
-
+from users_auth_app.models import User
 
 class Task(models.Model):
 
@@ -22,6 +22,7 @@ class Task(models.Model):
     board = models.ForeignKey(Board, related_name="tasks", on_delete=models.CASCADE)
     title = models.CharField(max_length=255)
     description = models.TextField(blank=True)
+    owner = models.ForeignKey(User, related_name="owned_tasks", on_delete=models.CASCADE, null=True, blank=True)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default="to-do")
     priority = models.CharField(max_length=10, choices=PRIORITY_CHOICES, default="medium")
     reviewer = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="reviewing_tasks", null=True, blank=True, on_delete=models.SET_NULL)

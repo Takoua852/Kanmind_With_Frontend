@@ -1,29 +1,45 @@
 from rest_framework import serializers
 from tasks_app.models import Task, Comment
 from users_auth_app.models import User
-from kanban_app.models import Board
 from django.core.exceptions import ObjectDoesNotExist
 
 
 class TaskUserSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = User
         fields = ["id", "email", "fullname"]
 
 
 class TaskSerializer(serializers.ModelSerializer):
+
     assignee = TaskUserSerializer(read_only=True)
     reviewer = TaskUserSerializer(read_only=True)
     comments_count = serializers.SerializerMethodField()
+
+    assignee_id = serializers.PrimaryKeyRelatedField(
+        queryset=User.objects.all(),
+        source="assignee",
+        write_only=True,
+        required=False
+    )
+    reviewer_id = serializers.PrimaryKeyRelatedField(
+        queryset=User.objects.all(),
+        source="reviewer",
+        write_only=True,
+        required=False
+    )
 
     class Meta:
         model = Task
         fields = [
             "id", "board", "title", "description", "status", "priority",
-            "assignee", "reviewer", "due_date", "comments_count"
+            "assignee", "reviewer", "assignee_id", "reviewer_id",
+            "due_date", "comments_count"
         ]
 
     def get_comments_count(self, obj):
+
         return obj.comments.count()
 
 
@@ -45,6 +61,7 @@ class TaskUpdateSerializer(serializers.ModelSerializer):
         ]
 
     def validate(self, data):
+
         board = self.instance.board if self.instance else data.get("board")
         assignee_id = data.get("assignee_id")
         reviewer_id = data.get("reviewer_id")
@@ -58,6 +75,7 @@ class TaskUpdateSerializer(serializers.ModelSerializer):
         return data
 
     def update(self, instance, validated_data):
+
         assignee_id = validated_data.pop("assignee_id", None)
         reviewer_id = validated_data.pop("reviewer_id", None)
 
@@ -69,16 +87,18 @@ class TaskUpdateSerializer(serializers.ModelSerializer):
                 try:
                     instance.assignee = User.objects.get(id=assignee_id)
                 except ObjectDoesNotExist:
-                    raise serializers.ValidationError("Assignee existiert nicht.")
+                    raise serializers.ValidationError(
+                        "Assignee existiert nicht.")
             else:
-                instance.assignee = None 
-        
+                instance.assignee = None
+
         if reviewer_id is not None:
             if reviewer_id:
                 try:
                     instance.reviewer = User.objects.get(id=reviewer_id)
                 except ObjectDoesNotExist:
-                    raise serializers.ValidationError("Reviewer existiert nicht.")
+                    raise serializers.ValidationError(
+                        "Reviewer existiert nicht.")
             else:
                 instance.reviewer = None
 
@@ -87,14 +107,9 @@ class TaskUpdateSerializer(serializers.ModelSerializer):
 
 
 class CommentSerializer(serializers.ModelSerializer):
+
     author = serializers.CharField(source="author.fullname", read_only=True)
 
     class Meta:
         model = Comment
         fields = ["id", "created_at", "author", "content"]
-
-
-class CommentCreateSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Comment
-        fields = ["content"]

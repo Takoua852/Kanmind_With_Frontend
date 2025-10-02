@@ -1,5 +1,5 @@
 const GUEST_LOGIN = {
-    email: "test@test.de",
+    email: "guest_user@mail.com",
     password: "testguest852"
 };
 
