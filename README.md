@@ -99,9 +99,10 @@ Kanmind/
 
 
 ## 💡 Notes
+- This repository now includes both backend and frontend code.
 - The `.gitignore` file ensures that sensitive data and the virtual environment are not included in the repository.
-- For production, configure your database and secret keys securely.
-- More documentation will be added soon.
+- Configure DEBUG=False, ALLOWED_HOSTS, and production database before deployment.
+- Templates and static files are modular for scalability and reusability.
 
 ---
 
@@ -159,13 +160,6 @@ To load them in templates, use:
 <script src="{% static 'assets/dashboard/js/main.js' %}"></script>
 
 ```
-
-## 💡 Notes
-
-This repository now includes both backend and frontend code.
-The .gitignore excludes sensitive data, .env, and virtual environments.
-Configure DEBUG=False, ALLOWED_HOSTS, and production database before deployment.
-Templates and static files are modular for scalability and reusability.
 
 ## 📜 License
 
